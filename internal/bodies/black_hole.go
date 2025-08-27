@@ -7,16 +7,16 @@ const (
 
 // Структура описывающая черную дыру
 type BlackHole struct {
-	Mass     float32  // Масса черной дыры
-	Position [2]int32 // Двухмерный вектор, описывающий координаты черной дыры
-	Rs       float32  // Радиус Шварцшильда (горизонт событий)
+	mass     float64    // Масса черной дыры
+	position [2]float64 // Двухмерный вектор, описывающий координаты черной дыры
+	rs       float64    // Радиус Шварцшильда (горизонт событий)
 }
 
 // Функция создания новой черной дыры с заданными параметрами
-func NewBlackHole(m float32, p [2]int32) *BlackHole {
+func NewBlackHole(m float64, p [2]float64) *BlackHole {
 	return &BlackHole{
-		Mass:     m,
-		Position: p,
-		Rs:       2 * G * m / (c * c), // Вычисление радиуса Шварцшильда
+		mass:     m,
+		position: p,
+		rs:       2 * G * m / (c * c), // Вычисление радиуса Шварцшильда
 	}
 }
