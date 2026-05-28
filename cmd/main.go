@@ -12,16 +12,32 @@ func main() {
 
 	bh := bodies.NewBlackHole(5.972e24, [2]float64{400, 300})
 
-	r := bodies.NewRay([2]float64{100, 300}, [2]float64{1, 0})
-
-	// Единый масштаб пикселей на метр для рисования и проверки горизонта
 	const pxPerMeter = 5000.0
-	// Масштаб скорости, чтобы луч не «улетал» слишком быстро
 	const speedScale = 1e8
+
+	rays := make([]*bodies.Ray, 0)
+
+	count := 10
+	offset := 50.0
+	total := offset * float64(count-1)
+
+	for i := 0; i < count; i++ {
+		y := 300.0 + float64(i)*offset - total/2
+
+		ray := bodies.NewRay(
+			[2]float64{100, y},
+			[2]float64{1, 0},
+		)
+
+		rays = append(rays, ray)
+	}
 
 	eng.Init(func() {
 		bh.DrawBlackHole(rl.Red, pxPerMeter)
-		r.Update(speedScale, pxPerMeter, bh)
-		r.DrawRay(rl.White, 10)
+
+		for _, ray := range rays {
+			ray.Update(speedScale, pxPerMeter, bh)
+			ray.DrawRay(rl.White)
+		}
 	})
 }
